@@ -82,7 +82,7 @@ const updateProjectTitle = asyncHandler(async (req, res) => {
   console.log(req.user, project.user);
   if (project) {
     console.log(req.user, project.user);
-    if ((project.user === req.user._id, "wwow")) {
+    if (project.user === req.user._id) {
       project.title = title;
       const updatedproject = await project.save();
       res.json(updatedproject);
