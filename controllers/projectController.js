@@ -77,18 +77,18 @@ const deleteProject = asyncHandler(async (req, res) => {
 
 const updateProjectTitle = asyncHandler(async (req, res) => {
   const { title } = req.body;
-  
-  const project = await Project.findById(req.params.id);
 
+  const project = await Project.findById(req.params.id);
+  console.log(req.user, project.user);
   if (project) {
-    if(project.user===req.user._id){
+    console.log(req.user, project.user);
+    if ((project.user === req.user._id, "wwow")) {
       project.title = title;
-    const updatedproject = await project.save();
-    res.json(updatedproject);
-    }
-    else{
-        res.status(401);
-    throw new Error("Unauthorised");
+      const updatedproject = await project.save();
+      res.json(updatedproject);
+    } else {
+      res.status(401);
+      throw new Error("Unauthorised");
     }
   } else {
     res.status(404);
@@ -139,7 +139,7 @@ const createProjectComment = asyncHandler(async (req, res) => {
 
     project.comments.push(newComment);
 
-    const updatedProject=await project.save();
+    const updatedProject = await project.save();
     res.status(201).json(updatedProject);
   } else {
     res.status(404);
