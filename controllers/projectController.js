@@ -79,13 +79,12 @@ const updateProjectTitle = asyncHandler(async (req, res) => {
   const { title } = req.body;
 
   const project = await Project.findById(req.params.id);
-  console.log(req.user, project.user);
+
   if (project) {
-    console.log(req.user, project.user);
-    if (project.user === req.user._id) {
+    if (req.user._id.toString() === project.user.toString()) {
       project.title = title;
       const updatedproject = await project.save();
-      res.json(updatedproject);
+      res.status(200).json(updatedproject);
     } else {
       res.status(401);
       throw new Error("Unauthorised");
